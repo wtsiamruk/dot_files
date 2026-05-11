@@ -60,7 +60,7 @@ else
     # default configs for nvm and sdkman
 
     # custom envs set
-    ENVS_DIR="$HOME/.env/"
+    ENV_DIR="$HOME/.env/"
     if [ -d "$ENV_DIR" ]; then
       for env_file in "$ENV_DIR"/*.sh; do
         if [ -f "$env_file" ]; then

@@ -6,29 +6,26 @@ def draw_tab(
     before, max_title_length, index, is_last, extra_data: ExtraData
 ) -> int:
     
-    # 1. Use the Accessor to get live process/directory info
-    # This avoids the 'object has no attribute' error
+    # 1. Initialize accessor
     ta = TabAccessor(tab.tab_id)
 
-    # 2. Get the process name (handling empty cases)
-    exe_path = ta.active_exe or "zsh"
-    exe = exe_path.split('/')[-1].lower()
+    # 2. DEFENSIVE CHECK: getattr prevents the 'no attribute' crash on macOS GUI boot
+    # We provide "zsh" as a fallback so the script doesn't die.
+    active_exe = getattr(ta, 'active_exe', 'zsh')
+    active_wd = getattr(ta, 'active_wd', '~')
 
-    # Logic for nvim
-    process_display = exe
+    # 3. Clean up values (handling None if getattr returns it)
+    exe = (active_exe or "zsh").split('/')[-1].lower()
 
-    # 3. Get the folder name
-    cwd = ta.active_wd or ""
     home = os.path.expanduser("~")
-
+    cwd = active_wd or home
     folder = "~" if cwd == home else (cwd.split('/')[-1] or "zsh")
 
-    # 4. Final Format: index : process@folder
-    display_title = f"{index} : {process_display}@{folder}"
+    # 4. Construct title
+    display_title = f"{index} : {exe}@{folder}"
 
     # 5. Overwrite and Render
     tab = tab._replace(title=display_title)
     return draw_tab_with_powerline(
         draw_data, screen, tab, before, max_title_length, index, is_last, extra_data
     )
-

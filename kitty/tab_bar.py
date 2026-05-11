@@ -15,11 +15,11 @@ def draw_tab(
     active_wd = getattr(ta, 'active_wd', '~')
 
     # 3. Clean up values (handling None if getattr returns it)
-    exe = (active_exe or "zsh").split('/')[-1].lower()
+    exe = (active_exe or "shell").split('/')[-1].lower()
 
     home = os.path.expanduser("~")
     cwd = active_wd or home
-    folder = "~" if cwd == home else (cwd.split('/')[-1] or "zsh")
+    folder = "~" if cwd == home else (cwd.split('/')[-1] or "shell")
 
     # 4. Construct title
     display_title = f"{index} : {exe}@{folder}"

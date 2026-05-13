@@ -1,0 +1,19 @@
+[opener]
+# Define a general system opener
+open = [
+	{ run = 'open "$@"', desc = "Open", for = "macos" },
+	{ run = 'xdg-open "$@"', desc = "Open", for = "linux" },
+]
+# Define your terminal editor
+edit = [
+	{ run = '${EDITOR:-vi} "$@"', block = true, desc = "Editor" },
+]
+
+[open]
+rules = [
+	# Use 'open' for Microsoft Office files and PDFs
+	{ mime = "application/{pdf,msword,vnd.openxmlformats-officedocument.*,vnd.ms-*}", use = "open" },
+	# Fallback: Use '$EDITOR' for everything else
+	{ name = "*", use = "edit" },
+]
+

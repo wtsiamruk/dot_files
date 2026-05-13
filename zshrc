@@ -71,6 +71,11 @@ else
       echo "WARNING: envs config dir $ENV_DIR not found, cusom envs aren't set"
     fi
 
+    
+    # Override cursor shape when running in Kitty terminal
+    if [[ "$TERM" == "xterm-kitty" ]]; then
+        echo -ne '\e[2 q'
+    fi
 
 # the config block - end
 fi

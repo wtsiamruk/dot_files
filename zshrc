@@ -77,6 +77,18 @@ else
         echo -ne '\e[2 q'
     fi
 
+    export PYENV_ROOT="$HOME/.pyenv"
+        [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+
 # the config block - end
 fi
 
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/walter/.lmstudio/bin"
+# End of LM Studio CLI section
+
+source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
+source /opt/homebrew/opt/chruby/share/chruby/auto.sh
+chruby ruby-3.4.1
